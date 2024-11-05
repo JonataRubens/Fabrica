@@ -1,6 +1,6 @@
 from datetime import date
 from django.db import models
-from django.utils import timezone
+
 
 CURSO_CHOICES = [
         ('Engenharia de Software', 'Engenharia de Software'),
