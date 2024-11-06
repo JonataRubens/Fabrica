@@ -5,7 +5,6 @@ from fabrica.forms import AlunoForm
 from fabrica.models import Aluno
 
 
-
 def default(request):
     return render(request, 'index.html')
 
