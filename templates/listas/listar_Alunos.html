@@ -4,50 +4,72 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Todos os alunos</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Todos os alunos</h6>
         </div>
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Nome Completo</th>
-                  <th>Curso</th>
-                  <th>Campus</th>
-                  <th>Data de Nascimento</th>
-                  {% comment %} <th>Foto</th> {% endcomment %}
-                  <th>Situação</th>
-                  <th>Forma de Ingresso</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for aluno in alunos %}
-                  <tr>
-                    <td>{{ aluno.nome_completo }}</td>
-                    <td>{{ aluno.curso }}</td>
-                    <td>{{ aluno.campus }}</td>
-                    <td>{{ aluno.data_nascimento }}</td>
-                    {% comment %} <td>
-                      {% if aluno.foto %}
-                        <img src="{{ aluno.foto.url }}" alt="Foto do aluno" width="50">
-                      {% else %}
-                        <span>Sem Foto</span>
-                      {% endif %}
-                    </td> {% endcomment %}
-                    <td>{{ aluno.situacao }}</td>
-                    <td>{{ aluno.forma_ingresso }}</td>
-                    <td>
-                      <a href="#" class="btn btn-info btn-sm">Editar</a>
-                      <a href="#" class="btn btn-danger btn-sm">Deletar</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+            <!-- Filtro -->
+            <form method="GET" action="{% url 'lista_alunos' %}">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="campus">Campus</label>
+                        <select class="form-control" name="campus" id="campus">
+                            <option value="">-- Selecione o Campus --</option>
+                            {% for campus in campus_options %}
+                                <option value="{{ campus.nome }}" {% if campus.nome == campus_filter %}selected{% endif %}>
+                                    {{ campus.nome }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="curso">Curso</label>
+                        <select class="form-control" name="curso" id="curso">
+                            <option value="">-- Selecione o Curso --</option>
+                            {% for curso in curso_options %}
+                                <option value="{{ curso.nome }}" {% if curso.nome == curso_filter %}selected{% endif %}>
+                                    {{ curso.nome }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Filtrar</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive" style="margin-top: 20px;">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nome Completo</th>
+                            <th>Curso</th>
+                            <th>Campus</th>
+                            <th>Data de Nascimento</th>
+                            <th>Situação</th>
+                            <th>Forma de Ingresso</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aluno in alunos %}
+                            <tr>
+                                <td>{{ aluno.nome_completo }}</td>
+                                <td>{{ aluno.curso }}</td>
+                                <td>{{ aluno.campus }}</td>
+                                <td>{{ aluno.data_nascimento }}</td>
+                                <td>{{ aluno.situacao }}</td>
+                                <td>{{ aluno.forma_ingresso }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-info btn-sm">Editar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
+    </div>
+  </div>
 </div>
-</div>
-{% endblock %} 
+{% endblock %}
