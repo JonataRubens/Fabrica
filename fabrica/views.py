@@ -51,3 +51,7 @@ def lista_alunos(request):
         'campus_filter': campus_filter,
         'curso_filter': curso_filter,
     })
+
+
+def cadastrarCurso(request):
+    return render(request, 'edit_Aluno/newCurso.html')
