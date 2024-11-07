@@ -34,7 +34,7 @@ class Aluno(models.Model):
     matricula = models.CharField(max_length=10, unique=True, editable=False)
     curso = models.CharField(max_length=50, choices=CURSO_CHOICES)
     campus = models.CharField(max_length=20, choices=CAMPUS_CHOICES)
-    data_nascimento = models.DateField()
+    data_nascimento = models.DateField(null=True, blank=True) 
     foto = models.ImageField(upload_to='alunos_fotos/', blank=True, null=True)
     situacao = models.CharField(max_length=20, choices=SITUACAO_CHOICES)
     forma_ingresso = models.CharField(max_length=20, choices=FORMA_INGRESSO_CHOICES)

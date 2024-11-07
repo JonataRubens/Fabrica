@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid">
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Todos os alunos</h6>
@@ -16,7 +15,7 @@
                   <th>Curso</th>
                   <th>Campus</th>
                   <th>Data de Nascimento</th>
-                  <th>Foto</th>
+                  {% comment %} <th>Foto</th> {% endcomment %}
                   <th>Situação</th>
                   <th>Forma de Ingresso</th>
                   <th>Ações</th>
@@ -29,13 +28,13 @@
                     <td>{{ aluno.curso }}</td>
                     <td>{{ aluno.campus }}</td>
                     <td>{{ aluno.data_nascimento }}</td>
-                    <td>
+                    {% comment %} <td>
                       {% if aluno.foto %}
                         <img src="{{ aluno.foto.url }}" alt="Foto do aluno" width="50">
                       {% else %}
                         <span>Sem Foto</span>
                       {% endif %}
-                    </td>
+                    </td> {% endcomment %}
                     <td>{{ aluno.situacao }}</td>
                     <td>{{ aluno.forma_ingresso }}</td>
                     <td>
@@ -49,14 +48,6 @@
           </div>
         </div>
       </div>
-    
-    <!-- Content Row -->
-    <div class="row">
-
-
-        <div class="col-lg-6 mb-4">
-        </div> 
-    </div>
-
+</div>
 </div>
 {% endblock %} 
