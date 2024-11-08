@@ -1,21 +1,23 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
-from fabrica.forms import AlunoForm
+from fabrica.forms import  CursoForm, AlunoForm, CampusForm
 from fabrica.models import Aluno, Campus, Curso
+from django.views.generic.edit import CreateView
+from .forms import CursoForm
+from .models.Campus import Campus
+from .models.Curso import Curso
+from .models.Aluno import Aluno
 
 
 def default(request):
     return render(request, 'index.html')
 
-class ViewRequests(TemplateView):
+# class ViewRequests(TemplateView):
 
-    def get_template_names(self):
-        folder_name = self.kwargs['folder_name']
-        template_name = self.kwargs['template_name']
-        return [f'{folder_name}/{template_name}.html']
-    
-
+#     def get_template_names(self):
+#         folder_name = self.kwargs['folder_name']
+#         template_name = self.kwargs['template_name']
+#         return [f'{folder_name}/{template_name}.html']
 
 def cadastrar_aluno(request):
     if request.method == 'POST':
@@ -52,6 +54,14 @@ def lista_alunos(request):
         'curso_filter': curso_filter,
     })
 
+class CursoCreateView(CreateView):
+    model = Curso
+    form_class = CursoForm
+    template_name = 'edit_Aluno/newCurso.html'
+    success_url = reverse_lazy('lista_alunos')
 
-def cadastrarCurso(request):
-    return render(request, 'edit_Aluno/newCurso.html')
+class CampusCreateView(CreateView):
+    model = Curso
+    form_class = CampusForm
+    template_name = 'edit_Aluno/newCampus.html'
+    success_url = reverse_lazy('lista_alunos')

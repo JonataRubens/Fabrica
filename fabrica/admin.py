@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Aluno
+from .models import Aluno, Campus, Curso
 
 @admin.register(Aluno)
 class AlunoAdmin(admin.ModelAdmin):
@@ -12,3 +12,7 @@ class AlunoAdmin(admin.ModelAdmin):
         if not obj.matricula:  # Gera a matrícula automaticamente, se não existir
             obj.save()
         super().save_model(request, obj, form, change)
+
+
+admin.site.register(Campus)
+admin.site.register(Curso)
