@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from fabrica.forms import  CursoForm, AlunoForm, CampusForm
@@ -11,13 +12,6 @@ from .models.Aluno import Aluno
 
 def default(request):
     return render(request, 'index.html')
-
-# class ViewRequests(TemplateView):
-
-#     def get_template_names(self):
-#         folder_name = self.kwargs['folder_name']
-#         template_name = self.kwargs['template_name']
-#         return [f'{folder_name}/{template_name}.html']
 
 def cadastrar_aluno(request):
     if request.method == 'POST':
@@ -65,3 +59,8 @@ class CampusCreateView(CreateView):
     form_class = CampusForm
     template_name = 'edit_Aluno/newCampus.html'
     success_url = reverse_lazy('lista_alunos')
+
+
+def cursos_por_campus(request, campus_id):
+    cursos = Curso.objects.filter(campus_id=campus_id).values('id', 'nome')
+    return JsonResponse({'cursos': list(cursos)})

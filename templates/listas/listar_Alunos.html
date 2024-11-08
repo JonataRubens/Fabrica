@@ -15,7 +15,7 @@
                         <select class="form-control" name="campus" id="campus">
                             <option value="">-- Selecione o Campus --</option>
                             {% for campus in campus_options %}
-                                <option value="{{ campus.nome }}" {% if campus.nome == campus_filter %}selected{% endif %}>
+                                <option value="{{ campus.id }}" {% if campus.id == campus_filter %}selected{% endif %}>
                                     {{ campus.nome }}
                                 </option>
                             {% endfor %}
@@ -26,7 +26,7 @@
                         <select class="form-control" name="curso" id="curso">
                             <option value="">-- Selecione o Curso --</option>
                             {% for curso in curso_options %}
-                                <option value="{{ curso.nome }}" {% if curso.nome == curso_filter %}selected{% endif %}>
+                                <option value="{{ curso.id }}" {% if curso.id == curso_filter %}selected{% endif %}>
                                     {{ curso.nome }}
                                 </option>
                             {% endfor %}
@@ -70,6 +70,33 @@
             </div>
         </div>
     </div>
-  </div>
 </div>
+</div>
+
+{% block scripts %}
+<script>
+    document.getElementById('campus').addEventListener('change', function() {
+        var campusId = this.value;
+        var cursoSelect = document.getElementById('curso');
+        
+        // Limpa o campo de curso
+        cursoSelect.innerHTML = '<option value="">-- Selecione o Curso --</option>';
+        
+        if (campusId) {
+            fetch(`/cursosCampus/${campusId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.cursos.forEach(curso => {
+                        var option = document.createElement('option');
+                        option.value = curso.id;
+                        option.textContent = curso.nome;
+                        cursoSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Erro:', error));
+        }
+    });
+</script>
+{% endblock %}
+
 {% endblock %}
